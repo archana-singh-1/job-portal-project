@@ -5,7 +5,7 @@ const PORT=process.env.PORT;
 const app=express();
 
 app.get ("/", function(req,resp){
-    resp.send("Server is running")
+    resp.send("done")
 });
 
 
