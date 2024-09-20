@@ -1,0 +1,23 @@
+{
+  "name": "job-portal-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/archana-singh-1/job-portal-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/archana-singh-1/job-portal-project/issues"
+  },
+  "homepage": "https://github.com/archana-singh-1/job-portal-project#readme",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
