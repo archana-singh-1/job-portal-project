@@ -1,5 +1,7 @@
 import express from "express";
 
+const PORT=process.env.PORT;
+
 const app=express();
 
 app.get ("/", function(req,resp){
@@ -7,6 +9,6 @@ app.get ("/", function(req,resp){
 });
 
 
-app.listen(4000,function(){
+app.listen(PORT,function(){
     console.log("Server is running on port 4000")
 });
