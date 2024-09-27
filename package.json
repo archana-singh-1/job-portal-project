@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
-    "dev" :"node --watch --env-file=.env index.js",
-    "build":"node --env-file=.env index.js",
-    "vercel-build":"echo hello",
-    "test":"echo \"Error: no test specified\"&& exit 1"
+    "dev": "node --watch --env-file=.env index.js",
+    "build": "node --env-file=.env index.js",
+    "vercel-build": "echo hello",
+    "test": "echo \"Error: no test specified\"&& exit 1"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/archana-singh-1/job-portal-project#readme",
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "mongoose": "^8.6.4"
   }
 }
