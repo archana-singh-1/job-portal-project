@@ -19,20 +19,6 @@ mongoose.connect(url)
 
 
 
-
-
-const mongoPassword = process.env.MONGODB_PASSWORD
-const url = `mongodb+srv://aayushisharma1:${mongoPassword}@cluster0.jfztl.mongodb.net/Job_Protal`
-mongoose.connect(url)
-.then(()=>{
-    console.log("Connect Done")
-})
-.catch((err)=>{
-    console.log(err)
-})
-
-
-
 app.use(express.json());
 
 app.use('/hiring',router)
