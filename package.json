@@ -21,7 +21,11 @@
   },
   "homepage": "https://github.com/archana-singh-1/job-portal-project#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.21.0",
-    "mongoose": "^8.6.4"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.6.4",
+    "sparse-bitfield": "^3.0.3"
   }
 }

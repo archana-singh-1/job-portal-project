@@ -1,8 +1,10 @@
 import express from "express"; 
-import signup_data from "../controllers/signup";
+import signup_data from "../controllers/signup.js";
+import login_data from "../controllers/login.js";
 
-const router=express.Router()
+const route=express.Router()
 
-router.post("/signup_data",signup_data)
+route.post('/signup',signup_data)
+route.post('/login', login_data);
 
-export default router;
+export default route;
