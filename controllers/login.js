@@ -27,5 +27,4 @@ const login_data = async (req, res) => {
         res.status(500).json({ message: "Error logging in", error: err.message });
     }
 };
-
 export default login_data;
