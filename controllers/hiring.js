@@ -1,4 +1,4 @@
-import Company from '../schema/hiring-model.js';
+import Company from '../schema/hiringSchema.js';
 
 const post_data = async (req, res) => {
     try {

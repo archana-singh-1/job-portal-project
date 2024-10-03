@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from 'mongoose';
-import router from './routes/hiring-route.js'
+import router from './routes/hiringRoute.js'
 import signup from './routes/signupRoute.js'
 import login from "./routes/signupRoute.js"
 
