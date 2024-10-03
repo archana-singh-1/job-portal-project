@@ -18,4 +18,22 @@ const post_data = async (req, res) => {
     }
 }
 
-export default post_data;
+
+const get_data = async (req,res)=>{
+    try{
+        const data = await Company.find({})
+        res.send({
+            message:"done",
+            details:data
+        })
+        
+    }
+    catch{
+        res.send({
+            message:"err",
+            err:err
+        })
+
+    }
+}
+export  {post_data,get_data};
