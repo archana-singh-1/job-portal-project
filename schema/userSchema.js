@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { type } from "os";
 
 const UserSchema = new mongoose.Schema({
     username: {
@@ -17,6 +18,11 @@ const UserSchema = new mongoose.Schema({
         required: [true, "Password is required"],
         minlength: [6, "Password must be at least 6 characters long"], 
     },
+    role:{
+        type:String,
+        required:[true,"Role is required"],
+        minlength:[3,"Role must be at least 3 characters long"]
+    }
 });
 
 export const UserSchemaModel = mongoose.model("User", UserSchema);
