@@ -19,6 +19,8 @@
   "bugs": {
     "url": "https://github.com/archana-singh-1/job-portal-project/issues"
   },
+
+  
   "homepage": "https://github.com/archana-singh-1/job-portal-project#readme",
   "dependencies": {
     "bcrypt": "^5.1.1",
