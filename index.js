@@ -19,15 +19,6 @@ mongoose.connect(url)
     console.log(err)
 })
 
-mongoose.connect(url)
-.then(()=>{
-    console.log("Connect Done")
-})
-.catch((err)=>{
-    console.log(err)
-})
-
-
 
 app.use('/hiring',router)
 app.use("/user",signup)
