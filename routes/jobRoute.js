@@ -5,7 +5,6 @@ const jobRouter = express.Router();
 
 jobRouter.post('/post-job', postJob);
 
-
 jobRouter.get('/list-jobs', listJobs);
 
 jobRouter.get('/search-jobs', searchJobs);
