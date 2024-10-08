@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import router from './routes/hiringRoute.js'
 import signup from './routes/signupRoute.js'
 import login from "./routes/signupRoute.js"
+import applicationRouter from "./routes/applyRoute.js";
+import jobRouter from "./routes/jobRoute.js";
 
 
 const app=express();
@@ -23,6 +25,8 @@ mongoose.connect(url)
 app.use('/hiring',router)
 app.use("/user",signup)
 app.use("/login",login)
+app.use("/api", applicationRouter);
+app.use("/jobs", jobRouter);
 
 app.listen(PORT,function(){
     console.log("Server is running on port 4000")
