@@ -3,7 +3,7 @@ import { Jobmodel } from "../schema/jobschema.js";
 
 const postJob = async (req, res) => {
     const { title, description, location, salary, jobType } = req.body;
-    const employerId = req.userId; 
+   
 
     try {
         const newJob = new Jobmodel({ employerId, title, description, location, salary, jobType });
