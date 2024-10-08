@@ -9,10 +9,6 @@ const companyCollection = new mongoose.Schema({
         type:String,
         required:true
     },
-    company:{
-        type:String,
-        required:true
-    },
     salary:{
         type:String,
         required:true
