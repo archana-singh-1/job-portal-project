@@ -5,7 +5,7 @@ import signup from './routes/uesrRoute.js'
 import login from "./routes/uesrRoute.js"
 import applicationRouter from "./routes/applyRoute.js";
 import jobRouter from "./routes/jobRoute.js";
-
+import upload from "./middleware/multer.js";
 
 const app=express();
 app.use(express.json());

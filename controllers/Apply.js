@@ -5,6 +5,8 @@ const applyForJob = async (req, res) => {
     const { jobId } = req.params;
     const { jobSeekerId, resume, additionalDetails } = req.body;  
 
+    const resumePath = req.file ? req.file.path : null;
+
     try {
         const job = await Jobmodel.findById(jobId);
         if (!job) return res.status(404).json({ message: "Job not found" });
@@ -20,7 +22,7 @@ const applyForJob = async (req, res) => {
         const newApplication = new Applicationmodel({
             jobId,
             jobSeekerId,
-            resume,
+            resume: resumePath,
             additionalDetails
         });
 
