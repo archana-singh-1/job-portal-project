@@ -9,7 +9,7 @@ const jobSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    company: {
+    company: { 
         type: String,
         required: true
     },
@@ -26,14 +26,14 @@ const jobSchema = new mongoose.Schema({
         enum: ['fulltime', 'parttime', 'remote'],
         required: true
     },
+    employerId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Employer',
+        required: true
+    },
     createdAt: {
         type: Date,
         default: Date.now
-    },
-    employerId: {  // Add this field
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Employer',  // Reference the Employer (or User) model
-        required: true
     }
 });
 
