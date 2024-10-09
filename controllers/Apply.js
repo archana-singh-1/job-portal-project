@@ -2,16 +2,13 @@ import { Applicationmodel } from "../schema/ApplicationSchema.js";
 import { Jobmodel } from "../schema/jobschema.js";
 
 const applyForJob = async (req, res) => {
-    const jobSeekerId = req.userId; 
     const { jobId } = req.params;
-    const { resume, additionalDetails } = req.body;
+    const { jobSeekerId, resume, additionalDetails } = req.body;  
 
     try {
-
         const job = await Jobmodel.findById(jobId);
         if (!job) return res.status(404).json({ message: "Job not found" });
 
-    
         const existingApplication = await Applicationmodel.findOne({
             jobId,
             jobSeekerId
@@ -33,5 +30,6 @@ const applyForJob = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 export { applyForJob };

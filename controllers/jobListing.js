@@ -2,11 +2,10 @@ import { Jobmodel } from "../schema/jobschema.js";
 
 
 const postJob = async (req, res) => {
-    const { title, description, company,location, salary, jobType } = req.body;
+    const { title, description, company,location, salary, jobType,employerId } = req.body;
  
-  
     try {
-      const newJob = new Jobmodel({ title, description, company,location, salary, jobType });
+      const newJob = new Jobmodel({ title, description, company,location, salary, jobType ,employerId});
       const savedJob = await newJob.save();
       res.status(201).json(savedJob);
     } catch (error) {
