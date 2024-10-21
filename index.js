@@ -6,6 +6,10 @@ import login from "./routes/uesrRoute.js"
 import applicationRouter from "./routes/applyRoute.js";
 import jobRouter from "./routes/jobRoute.js";
 import upload from "./middleware/multer.js";
+import  applyForJob  from "./routes/applyRoute.js";
+import dotenv from 'dotenv';
+dotenv.config();
+
 
 const app=express();
 app.use(express.json());
@@ -25,8 +29,9 @@ mongoose.connect(url)
 app.use('/hiring',router)
 app.use("/user",signup)
 app.use("/login",login)
-app.use("/api", applicationRouter);
+// app.use("/api", applicationRouter);
 app.use("/jobs", jobRouter);
+// app.use("/apply",applyForJob)
 
 app.listen(PORT,function(){
     console.log("Server is running on port 4000")
