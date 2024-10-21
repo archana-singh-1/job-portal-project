@@ -31,7 +31,7 @@ app.use("/user",signup)
 app.use("/login",login)
 // app.use("/api", applicationRouter);
 app.use("/jobs", jobRouter);
-// app.use("/apply",applyForJob)
+app.use("/apply",applyForJob)
 
 app.listen(PORT,function(){
     console.log("Server is running on port 4000")
