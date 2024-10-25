@@ -5,14 +5,14 @@
 import multer from 'multer';
 import admin from 'firebase-admin';
 import { v4 as uuidv4 } from 'uuid';
-import Apply from '../schema/applySchema.js'; 
+import Apply from '../schema/applySchema.js'; // Ensure this path is correct
 
 // Firebase Admin Initialization
-import serviceAccount from '../firebaseKey.json' assert { type: 'json' }; 
+import serviceAccount from '../firebaseKey.json' assert { type: 'json' }; // Firebase service account key
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'upload-22c26.appspot.com', 
+  storageBucket: 'upload-22c26.appspot.com', // Your Firebase bucket name
 });
 
 const bucket = admin.storage().bucket();
@@ -84,3 +84,4 @@ const applyForJob = async (req, res) => {
   }
 };
 export { upload, applyForJob };
+
