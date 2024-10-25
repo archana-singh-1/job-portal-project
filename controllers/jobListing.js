@@ -2,18 +2,52 @@ import { Jobmodel } from "../schema/jobschema.js";
 
 
 const postJob = async (req, res) => {
-    const { title, description, company,location, salary, jobType,employerId } = req.body;
- 
-    try {
-      const newJob = new Jobmodel({ title, description, company,location, salary, jobType ,employerId});
+  const { title, description, company, location, salary, jobType, employerId } = req.body;
+
+  try {
+      const newJob = new Jobmodel({ title, description, company, location, salary, jobType, employerId });
       const savedJob = await newJob.save();
-      res.status(201).json(savedJob);
-    } catch (error) {
+      res.status(201).json({
+          message: "Job successfully posted!",
+          job: savedJob
+      });
+  } catch (error) {
       console.error("Error saving job:", error);
       res.status(500).json({ message: error.message });
-    }
-  };
+  }
+};
+
+
+
+const AllJobs = async (req, res) => {
+  try {
+      // Fetch all job listings from the database
+      const jobs = await Jobmodel.find().populate('employerId', 'name email');
+      // Send the list of jobs in the response
+      res.status(200).json({
+          message: "Jobs fetched successfully!",
+          jobs
+      });
+  } catch (error) {
+      console.error("Error fetching jobs:", error);
+      res.status(500).json({ message: error.message });
+  }
+};
+
+
   
+
+
+
+
+
+
+
+
+
+
+
+
   const listJobs = async (req, res) => {
     try {
       const jobs = await Jobmodel.find().populate('employerId', 'name email');

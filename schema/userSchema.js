@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
     },
     role: {
       type: String,
-      enum: ['employer', 'job_seeker'],
+      // enum: ['Employer', 'Job Seeker'],
       required: true
     },
     createdAt: {
@@ -25,4 +25,6 @@ const userSchema = new mongoose.Schema({
     }
 });
   
-export const UserSchemaModel = mongoose.model("User", userSchema );
+export const UserSchemaModel = mongoose.model("Data", userSchema );
+
+
