@@ -1,11 +1,11 @@
 
 import express from "express"; 
 import { upload,applyForJob } from '../controllers/Apply.js';
-
+import { authenticate } from '../middleware/authMiddleware.js'; 
 
 const router = express.Router();
 
-router.post('/upload', upload.single('file'), applyForJob); // Use the upload middleware before the controller
+router.post('/upload', authenticate, upload.single('file'), applyForJob); 
 
 
 export default router;
