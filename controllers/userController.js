@@ -25,10 +25,6 @@ export const signup = async (req, res) => {
     }
 };
 
-
-
-
-
 export const login = async (req, res) => {
     const { email, password } = req.body; 
     try {
@@ -52,7 +48,14 @@ export const login = async (req, res) => {
 
 
 
+export const logout = async (req, res) => {
+    const userId = req.user.id; 
 
+    try {
+        await UserSchemaModel.findByIdAndDelete(userId);
 
-
-
+        res.status(200).json({ message: "User data deleted successfully and logged out." });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
