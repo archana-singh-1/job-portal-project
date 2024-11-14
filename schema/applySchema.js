@@ -27,10 +27,3 @@ const applySchema = new mongoose.Schema({
 const Apply = mongoose.model("Apply", applySchema);
 export default Apply;
 
-
-
-
-
-
-
-

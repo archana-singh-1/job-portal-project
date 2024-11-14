@@ -1,11 +1,7 @@
-
-
-//job portal vala code 
-// controllers/applyController.js
 import multer from 'multer';
 import admin from 'firebase-admin';
 import { v4 as uuidv4 } from 'uuid';
-import Apply from '../schema/applySchema.js'; // Ensure this path is correct
+import Apply from '../schema/applySchema.js'; 
 
 // Firebase Admin Initialization
 import serviceAccount from '../firebaseKey.json' assert { type: 'json' }; // Firebase service account key
@@ -65,7 +61,6 @@ const applyForJob = async (req, res) => {
         });
         await applyData.save();
 
-        // Send a success response
         res.send({
           message: 'Application submitted successfully',
           firebaseUrl: url,
@@ -83,5 +78,8 @@ const applyForJob = async (req, res) => {
     res.status(500).send({ message: 'Unexpected error occurred', error: err.message });
   }
 };
-export { upload, applyForJob };
 
+
+
+
+export { upload, applyForJob };

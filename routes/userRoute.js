@@ -1,5 +1,7 @@
 import express from "express"; 
+
 import { signup, login,logout } from "../controllers/userController.js";
+
 import { authenticate } from '../middleware/authMiddleware.js'; 
 
 const route=express.Router()
