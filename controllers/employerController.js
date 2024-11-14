@@ -1,4 +1,4 @@
-import { Job } from "../schema/jobschema.js";
+// import { Job } from "../schema/jobschema.js";
 import { User } from "../schema/userSchema.js";
 
 
@@ -30,6 +30,7 @@ const createJob = async (req, res) => {
 
     await job.save();
     res.status(201).json({ message: 'Job posted successfully', job });
+    console.log(res)
   } catch (error) {
     // console.error("Error while creating job:", error);
     res.status(500).json({ error: 'Failed to post job' });
