@@ -1,4 +1,4 @@
-import { Job } from "../schema/jobschema.js";
+import Job from "../schema/jobschema.js";
 import { User } from "../schema/userSchema.js";
 
 
@@ -30,6 +30,7 @@ const createJob = async (req, res) => {
 
     await job.save();
     res.status(201).json({ message: 'Job posted successfully', job });
+    console.log(res)
   } catch (error) {
     // console.error("Error while creating job:", error);
     res.status(500).json({ error: 'Failed to post job' });
@@ -38,22 +39,27 @@ const createJob = async (req, res) => {
 
 
 
-
 const getJobById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const job = await Job.findById(id).populate('employerId', 'name'); 
+    console.log("Fetching Job with ID:", id); // Debugging log
+
+    const job = await Job.findById(id).populate('employerId', 'name'); // Populates employer name from User schema
 
     if (!job) {
+      console.error("Job not found for ID:", id);
       return res.status(404).json({ error: 'Job not found' });
     }
+
+    console.log("Job found:", job); // Debugging log
     res.status(200).json(job);
   } catch (error) {
-    // console.error("Error fetching job by ID:", error);
+    console.error("Error in getJobById:", error);
     res.status(500).json({ error: 'Failed to fetch job' });
   }
 };
+
 
 
 

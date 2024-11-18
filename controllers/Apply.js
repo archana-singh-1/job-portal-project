@@ -1,85 +1,90 @@
-import multer from 'multer';
-import admin from 'firebase-admin';
+import Job from '../schema/jobschema.js'; 
 import { v4 as uuidv4 } from 'uuid';
-import Apply from '../schema/applySchema.js'; 
-
-// Firebase Admin Initialization
-import serviceAccount from '../firebaseKey.json' assert { type: 'json' }; // Firebase service account key
+import admin from 'firebase-admin';
+import multer from 'multer';
+import Joi from 'joi';
+import serviceAccount from '../firebaseKey.json' assert { type: 'json' };
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  storageBucket: 'upload-22c26.appspot.com', // Your Firebase bucket name
+  storageBucket: 'upload-22c26.appspot.com',
 });
 
 const bucket = admin.storage().bucket();
 
-// Multer Setup for File Upload (in-memory storage)
 const upload = multer({
-  storage: multer.memoryStorage(), // Files will be stored in memory temporarily
+  storage: multer.memoryStorage(),
 });
 
-// Function to handle file upload and saving application data
+const applySchema = Joi.object({
+  jobId: Joi.string().required(), 
+});
+
+const validateApply = (req, res, next) => {
+  const { error } = applySchema.validate(req.body);
+  if (error) return res.status(400).send({ error: error.details[0].message });
+  next();
+};
+
 const applyForJob = async (req, res) => {
   try {
-    // Check if a file is uploaded
     if (!req.file) {
-      return res.status(400).send({ message: 'No file uploaded' });
+      return res.status(400).send({ error: 'Resume file is required' });
     }
 
-    // Generate a unique file name for Firebase
-    const blob = bucket.file(`images/${uuidv4()}-${req.file.originalname}`);
-    const blobStream = blob.createWriteStream({
+    const { jobId } = req.body;
+
+    const fileName = `${uuidv4()}_${req.file.originalname}`;
+    const file = bucket.file(fileName);
+
+    const stream = file.createWriteStream({
       metadata: {
         contentType: req.file.mimetype,
       },
     });
 
-    // Handle upload errors
-    blobStream.on('error', (err) => {
-      console.error('Upload error:', err);
-      return res.status(500).send({ message: 'Error uploading file to Firebase', error: err.message });
+    stream.on('error', (err) => {
+      console.error('File upload error:', err);
+      return res.status(500).send({ error: 'Failed to upload file' });
     });
 
-    // On finish of file upload
-    blobStream.on('finish', async () => {
+    stream.on('finish', async () => {
       try {
-        // Generate a signed URL for the uploaded file
-        const [url] = await blob.getSignedUrl({
-          action: 'read',
-          expires: '03-09-2491',
-        });
+        await file.makePublic();
+        const fileUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
 
-        // Save application data to MongoDB
-        const applyData = new Apply({
-          whyHire: req.body.whyHire, // Storing whyHire data
-          availability: req.body.availability, // Storing availability data
-          resume: {
-            firebaseUrl: url,
-            uploadedAt: Date.now(),
-            fileName: req.file.originalname,
-          },
-        });
-        await applyData.save();
+        const applicantData = {
+          userId: req.user.id, 
+          name: req.user.name,  
+          resumeUrl: fileUrl,
+          appliedAt: new Date(),
+        };
 
-        res.send({
+        const job = await Job.findByIdAndUpdate(
+          jobId,
+          { $push: { applicants: applicantData } },
+          { new: true }
+        );
+
+        if (!job) {
+          return res.status(404).send({ error: 'Job not found' });
+        }
+
+        return res.status(201).send({
           message: 'Application submitted successfully',
-          firebaseUrl: url,
+          job,
         });
       } catch (err) {
-        console.error('Error saving to MongoDB:', err);
-        res.status(500).send({ message: 'Error saving application to MongoDB', error: err.message });
+        console.error('Database save error:', err);
+        return res.status(500).send({ error: 'Failed to save application data' });
       }
     });
 
-    // End the stream
-    blobStream.end(req.file.buffer);
+    stream.end(req.file.buffer);
   } catch (err) {
-    console.error('Unexpected error:', err);
-    res.status(500).send({ message: 'Unexpected error occurred', error: err.message });
+    console.error('Application error:', err);
+    res.status(500).send({ error: 'An error occurred while applying for the job' });
   }
 };
 
-
-
-
-export { upload, applyForJob };
+export { upload, applyForJob, validateApply };

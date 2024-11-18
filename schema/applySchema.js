@@ -1,6 +1,12 @@
-import mongoose from "mongoose";
+
+import mongoose from 'mongoose';
 
 const applySchema = new mongoose.Schema({
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User',
+  },
   whyHire: {
     type: String,
     required: true,
@@ -9,21 +15,11 @@ const applySchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  resume: {
-    firebaseUrl: {
-      type: String, 
-    },
-    uploadedAt: {
-      type: Date,
-      default: Date.now, 
-    },
-    fileName: {
-      type: String, 
-      required: true,
-    },
+  resumeUrl: {
+    type: String, 
+    required: true,
   },
 });
 
-const Apply = mongoose.model("Apply", applySchema);
+const Apply = mongoose.model('Apply', applySchema);
 export default Apply;
-
