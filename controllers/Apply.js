@@ -1,13 +1,10 @@
-
-
-import Job from '../schema/jobschema.js'; // Assuming you have a Job schema
+import Job from '../schema/jobschema.js'; 
 import { v4 as uuidv4 } from 'uuid';
 import admin from 'firebase-admin';
 import multer from 'multer';
 import Joi from 'joi';
 import serviceAccount from '../firebaseKey.json' assert { type: 'json' };
 
-// Firebase Admin SDK setup
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: 'upload-22c26.appspot.com',

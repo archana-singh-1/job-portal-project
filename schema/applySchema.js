@@ -1,3 +1,4 @@
+
 import mongoose from 'mongoose';
 
 const applySchema = new mongoose.Schema({
@@ -15,7 +16,7 @@ const applySchema = new mongoose.Schema({
     required: true,
   },
   resumeUrl: {
-    type: String, // Only storing URL, not filename or buffer
+    type: String, 
     required: true,
   },
 });
