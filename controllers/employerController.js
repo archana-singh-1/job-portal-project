@@ -87,44 +87,82 @@
 
 
 
+//main code
 
 import Job from "../schema/jobschema.js";
 import { User } from "../schema/userSchema.js";
+//final h 
+// const createJob = async (req, res) => {
+//   const { title, description, employerId, location, salary, jobType, skills } = req.body; // Add 'skills' to the destructuring
+
+//   try {
+//     const employer = await User.findById(employerId);
+
+//     if (!employer) {
+//       return res.status(400).json({ error: 'Invalid employer ID: User not found' });
+//     }
+
+//     if (employer.role !== 'Employer') {
+//       return res.status(400).json({ error: 'Invalid employer ID: User is not an Employer' });
+//     }
+
+//     const job = new Job({
+//       title,
+//       description,
+//       employerId,
+//       location,
+//       salary,
+//       jobType,
+//       skills: skills.map((skill) => ({ name: skill })), // Map array of skill strings to objects with 'name'
+//     });
+
+//     await job.save();
+//     res.status(201).json({ message: 'Job posted successfully', job });
+//   } catch (error) {
+//     console.error("Error while creating job:", error);
+//     res.status(500).json({ error: 'Failed to post job' });
+//   }
+// };
+
+
+
+
+
+
 
 const createJob = async (req, res) => {
-  const { title, description, employerId, location, salary, jobType, skills } = req.body; // Add 'skills' to the destructuring
+    const userId = req.user.id; // Get user ID from the authenticated token
 
-  try {
-    // Check if the employer exists
-    const employer = await User.findById(employerId);
+    try {
+        // Validate the user role
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        if (user.role !== "Employer") {
+            return res.status(403).json({ message: "Access denied: Only employers can create jobs" });
+        }
 
-    if (!employer) {
-      return res.status(400).json({ error: 'Invalid employer ID: User not found' });
+        // Create a new job
+        const { title, description, location, salary, jobType, skills } = req.body;
+
+        const newJob = new Job({
+            title,
+            description,
+            employerId: userId, // Associate job with the employer's user ID
+            location,
+            salary,
+            jobType,
+            skills,
+        });
+
+        const savedJob = await newJob.save();
+        res.status(201).json({ message: "Job created successfully", job: savedJob });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
-
-    // Check if the user is an employer
-    if (employer.role !== 'Employer') {
-      return res.status(400).json({ error: 'Invalid employer ID: User is not an Employer' });
-    }
-
-    // Create the job with the provided details, including skills
-    const job = new Job({
-      title,
-      description,
-      employerId,
-      location,
-      salary,
-      jobType,
-      skills: skills.map((skill) => ({ name: skill })), // Map array of skill strings to objects with 'name'
-    });
-
-    await job.save();
-    res.status(201).json({ message: 'Job posted successfully', job });
-  } catch (error) {
-    console.error("Error while creating job:", error);
-    res.status(500).json({ error: 'Failed to post job' });
-  }
 };
+
 
 const getJobById = async (req, res) => {
   const { id } = req.params;
