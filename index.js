@@ -31,3 +31,9 @@ app.use("/apply", applyForJob);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
+
+
+
+//https://job-portal-project-theta.vercel.app
